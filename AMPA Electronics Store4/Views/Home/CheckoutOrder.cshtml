@@ -1,0 +1,252 @@
+﻿@using AMPA_Electronics_Store4.Models
+@{
+
+    int row = 0, totalqty = 0;
+    decimal totalbill = 0;
+    string discount;
+    
+}
+<!-- checkout page -->
+<div class="privacy py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>C</span>heckout
+        </h3>
+        <!-- //tittle heading -->
+        <div class="checkout-right">
+            <div class="table-responsive  table-hover">
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Session["mycart"] == null)
+                        {
+                            <tr>
+                                <td></td>
+                                <td colspan="2">
+                                    <b style="align-content:center ; color:red; font-size:medium">Your Shopping Cart Is Empty!...</b>
+                                </td>
+                                <td colspan="2">
+                                    <a class="btn btn-block" style="background-color:cornflowerblue; color:white" href="@Url.Action("Products", "Home")">Continue Shopping</a>
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in (List<Product>)Session["mycart"])
+                            {
+                                <tr class="rem1">
+                                    <td class="image">
+                                        <a href="single.html">
+                                            <img height="190px" width="210px" src="@Url.Content(item.PRODUCT_PICTURE)" alt=" " class="img-responsive">
+                                        </a>
+                                    </td>
+                                    <td class="invert">
+                                        <b>@item.PRODUCT_NAME</b>
+                                        <br />
+                                        <h6 style="color:black"> @item.PRODUCT_DESCRIPTION</h6>
+                                        <h6 style="color:black">Available Stock: <b>@item.OrderDetails.Select(x => x.QUANTITY).Sum()</b></h6>
+                                    </td>
+                                    <td class="invert"><b>RS. @item.PRODUCT_SALEPRICE</b></td>
+                                    <td class="invert">
+                                        <div class="quantity">
+
+                                            <a href="@Url.Action("MinusFromCart", "Home", new { RowNo = row })" class="btn  fa fa-minus"></a>
+                                            <span><b>@item.PRO_QUANTITY</b></span>
+                                            <a href="@Url.Action("PlusToCart", "Home", new { RowNo = row })" class="btn  fa fa-plus"></a>
+
+                                        </div>
+                                    </td>
+                                    <td class="invert"><b>RS. @(decimal.Parse(item.PRODUCT_SALEPRICE.ToString()) * decimal.Parse(item.PRO_QUANTITY.ToString()))</b></td>
+                                    <td class="invert">
+                                        <div class="rem">
+                                            <a href="@Url.Action("RemoveFromCart", "Home", new { RowNo = row })" class="btn fa fa-trash"></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                row++;
+                                totalqty += item.PRO_QUANTITY;
+                                totalbill += (decimal.Parse(item.PRODUCT_SALEPRICE.ToString()) * decimal.Parse(item.PRO_QUANTITY.ToString()));
+                            }
+                            if (row == 0)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <b style="align-content:center ; color:red; font-size:medium">Your Shopping Cart Is Empty!...</b>
+                                    </td>
+                                    <td colspan="2">
+                                        <a class="btn btn-block" style="background-color:cornflowerblue; color:white" href="@Url.Action("Products", "Home")">Continue Shopping</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                    <tfoot class="invert">
+                        @if (totalqty >= 1)
+                        {
+                            <tr>
+                                <td><b style="align-content:center ; color:red; font-size:medium">Thank You For Shopping!...</b></td>
+                                <td>
+                                    <a class="btn btn-block" style="background-color:cornflowerblue; color:white" href="@Url.Action("Products", "Home")">Continue Shopping</a>
+                                </td>
+                                <td></td>
+                                <td><b>@totalqty</b></td>
+                                <td><b>@totalbill</b></td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        @using (Html.BeginForm("PayNow", "Home", FormMethod.Post))
+        {
+        <div class="col-lg-6">
+            <table class="table table-responsive">
+                @if (totalqty >= 1)
+                {
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="color:blue; font-size:large; font-style:italic; align-content:center"><h4>Order Summary</h4></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><h5 class="mb-sm-4 mb-3">Sub Total:</h5></td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">RS. @totalbill</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="color:grey">Delivery Charges:</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">Free</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" style="color:grey">Payment Method:</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">
+                            <input type="radio" value="Cash on Delivery" name="ORDER_STATUS" checked="checked" /> Cash on Delivery
+                            <input type="radio" value="Paid" name="ORDER_STATUS" /> Pay with PayPal
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <h5 class="mb-sm-4 mb-3">Grand Total:</h5>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">@totalbill</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="checkout-left ">
+
+            <div class="address_form_agile mt-sm-5 mt-4">
+                @if (totalqty >= 1)
+                {
+                    <h4 class="mb-sm-4 mb-3">Peronal Details</h4>
+                    if (Session["Customer"] == null)
+                    {
+                        <a href="@Url.Action("Login","Customers")"><h4 class="mb-sm-4 mb-3 fa fa-user" style="text-align:right">Customer Login</h4></a> 
+                    }
+                    
+
+                    <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+                        <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                            <div class="information-wrapper">
+                                <div class="first-row">
+                                    @if (Session["Customer"] != null)
+                                    {
+                                        Customer c = (Customer)Session["Customer"];
+                                        <div class="controls form-group">
+                                            <input class="billing-address-name form-control" type="text" value="@c.CUSTOMER_NAME" placeholder="Enter Full Name" name="ORDER_NAME" required="">
+                                        </div>
+                                        <hr />
+                                        <div class="w3_agileits_card_number_grids">
+                                            <div class="w3_agileits_card_number_grid_left form-group">
+                                                <div class="controls">
+                                                    <input type="number" maxlength="12" title="Enter Phone Number" value="@c.CUSTOMER_CONTACT" class="form-control" placeholder="eg. 03xxxxxxxxx" name="ORDER_CONTACT" required="">
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="w3_agileits_card_number_grid_left form-group">
+                                                <div class="controls">
+                                                    <input type="email" title="Enter Email" class="form-control" value="@c.CUSTOMER_EMAIL" placeholder="Enter E-mail" name="ORDER_EMAIL" required="">
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="w3_agileits_card_number_grid_right form-group">
+                                                <div class="controls">
+                                                    <textarea class="form-control" placeholder="Enter Address" name="ORDER_ADDRESS" required="">@c.CUSTOMER_ADDRESS</textarea>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="controls form-group">
+                                            <input class="billing-address-name form-control" type="text" placeholder="Enter Full Name" name="ORDER_NAME" required="">
+                                        </div>
+                                        <hr />
+                                        <div class="w3_agileits_card_number_grids">
+                                            <div class="w3_agileits_card_number_grid_left form-group">
+                                                <div class="controls">
+                                                    <input type="number" maxlength="12" title="Enter Phone Number" class="form-control" placeholder="eg. 03xxxxxxxxx" name="ORDER_CONTACT" required="">
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="w3_agileits_card_number_grid_left form-group">
+                                                <div class="controls">
+                                                    <input type="email" title="Enter Email" class="form-control" placeholder="Enter E-mail" name="ORDER_EMAIL" required="">
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="w3_agileits_card_number_grid_right form-group">
+                                                <div class="controls">
+                                                    <textarea class="form-control" placeholder="Enter Address" name="ORDER_ADDRESS" required=""></textarea>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    }
+                                </div>
+                                @if (Session["mycart"] != null)
+                                {
+                                    <div class="col-lg-12 ">
+                                        <input class="btn btn-block btn-primary " type="submit" name="submit" value="Checkout" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+        }
+    </div>
+</div>
+<!-- //checkout page -->;

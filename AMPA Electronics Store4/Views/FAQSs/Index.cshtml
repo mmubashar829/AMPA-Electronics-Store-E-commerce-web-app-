@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AMPA_Electronics_Store4.Models.FAQS>
+
+@{
+    
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    
+    ViewBag.Title = "Company's Details";
+}
+
+<h2>FAQS</h2>
+
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Create", "FAQSs")">Add New FAQS</a>
+</p>
+<table class="table table-bordered table-hover table-responsive table-dark">
+    <tr>
+        <th>
+             FAQS QUESTION
+        </th>
+        <th>
+            FAQS ANSWER
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.FAQS_QUESTION)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FAQS_ANSWER)
+    </td>
+    <td>
+        <a class="btn btn-primary btn-lg glyphicon glyphicon-edit" href="@Url.Action("Edit", "FAQSs",  new { id = item.FAQS_ID })"></a> |
+        <a class="btn btn-success btn-lg glyphicon glyphicon-book" href="@Url.Action("Details", "FAQSs",  new { id = item.FAQS_ID })"></a> |
+        <a class="btn btn-danger btn-lg glyphicon glyphicon-trash" href="@Url.Action("Delete", "FAQSs",  new { id = item.FAQS_ID })"></a> |
+    </td>
+</tr>
+    }
+
+</table>

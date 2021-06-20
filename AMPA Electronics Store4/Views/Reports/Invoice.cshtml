@@ -1,0 +1,110 @@
+﻿@model IEnumerable<AMPA_Electronics_Store4.Models.Order>
+@using AMPA_Electronics_Store4.Models;
+@{
+    Model1 db = new Model1();
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Invoice";
+}
+    <div id="printArea">
+        <table class="table table-responsive ">
+            <tr>
+                <td rowspan="3"><img src="@Url.Content(db.Companies.Select(x=>x.COMPANY_LOGO).FirstOrDefault())" height="140px" ; width="220px" /></td>
+                <td></td>
+                <td class="text-right">@db.Companies.Select(x => x.COMPANY_EMAIL).FirstOrDefault()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-right">@db.Companies.Select(x => x.COMPANY_ADDRESS).FirstOrDefault()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-right">@db.Companies.Select(x => x.COMPANY_CONTACT).FirstOrDefault()</td>
+            </tr>
+        </table>
+        <center><h2 style="color:cornflowerblue"> Order Invoice</h2></center>
+        @foreach (var o in Model)
+        {
+            int TotalQuantity = 0;
+            double TotalAmount = 0;
+
+            <table class="table table-responsive table-borderedless">
+                <tr>
+                    <td colspan="4" align="center"><h3>Order Details</h3></td>
+                </tr>
+                <tr>
+                    <td>Order Nubmer</td>
+                    <th>@o.ORDER_ID</th>
+                    <td>Person Name</td>
+                    <th>@o.ORDER_NAME</th>
+                </tr>
+                <tr>
+                    <td>Order Date</td>
+                    <th>@DateTime.Parse(o.ORDER_DATE.ToString()).ToLongDateString()</th>
+                    <td>Person Email</td>
+                    <th>@o.ORDER_EMAIL</th>
+                </tr>
+                <tr>
+                    <td>Order Status</td>
+                    <th>@o.ORDER_STATUS</th>
+                    <td>Person Contact</td>
+                    <th>@o.ORDER_CONTACT</th>
+                </tr>
+                <tr>
+                    <td>Order Type</td>
+                    <th>@o.ORDER_TYPE</th>
+                    <td>Person Address</td>
+                    <th>@o.ORDER_ADDRESS</th>
+                </tr>
+            </table>
+            <table class="table table-responsive table-bordered table-hover">
+                <tr>
+                    <td colspan="6" align="center"><h3>Product Details</h3></td>
+                </tr>
+                <tr>
+                    <th>Product Picture</th>
+                    <th>Product Name</th>
+                    <th>Product Discription</th>
+                    <th>Product Price</th>
+                    <th>Product Quantity</th>
+                    <th>Product Amount</th>
+                </tr>
+                @foreach (var od in o.OrderDetails)
+                {
+                    <tr>
+                        <td><img height="120px" width="140px" src="@Url.Content(od.Product.PRODUCT_PICTURE)" /></td>
+                        <td>@od.Product.PRODUCT_NAME</td>
+                        <td>@od.Product.PRODUCT_DESCRIPTION</td>
+                        <td>@od.PURCHASE_PRICE</td>
+                        <td>@Math.Abs(Convert.ToInt32(od.QUANTITY))</td>
+                        <td>@(double.Parse(od.PURCHASE_PRICE.ToString()) * Math.Abs(Convert.ToInt32(od.QUANTITY)))</td>
+                    </tr>
+                    TotalQuantity += Math.Abs(Convert.ToInt32(od.QUANTITY));
+                    TotalAmount += double.Parse(od.PURCHASE_PRICE.ToString()) * Math.Abs(Convert.ToInt32(od.QUANTITY));
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@TotalQuantity</td>
+                    <td>@TotalAmount</td>
+                </tr>
+            </table>
+        }
+    </div>
+<input id="btn2" type="button" onclick="return PrintFunction()" value="Print Invoice" class="btn btn-block btn-primary" />
+<script type="text/javascript">
+    function PrintFunction() {
+        var print = document.getElementById('printArea');
+        var printWindow = window.open('','', 'height=400, width=800');
+        printWindow.document.write('<html><head><title>DIV Contents</title>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(print.innerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        setTimeout(function () {
+            printWindow.print();
+        }, 500);
+        return false;
+    }
+</script>

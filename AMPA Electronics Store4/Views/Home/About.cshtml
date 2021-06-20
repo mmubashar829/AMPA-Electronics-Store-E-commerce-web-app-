@@ -1,0 +1,62 @@
+﻿@using AMPA_Electronics_Store4.Models;
+@{ 
+    Model1 db = new Model1();
+}
+<!-- about -->
+<div class="welcome py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>A</span>bout
+            <span>U</span>s
+        </h3>
+        <!-- //tittle heading -->
+        <div class="row">
+            <div class="col-lg-9 welcome-left">
+                <h3>Welcome To</h3>
+                <h3 class="my-sm-3 my-2">
+                    @db.Companies.Select(p => p.COMPANY_NAME).FirstOrDefault()
+                </h3>
+                <p>
+                    @db.Companies.Select(p => p.COMPANY_MENIFESTO).FirstOrDefault()
+                </p>
+            </div>
+            <div class="col-lg-3 welcome-right-top mt-lg-0 mt-sm-5 mt-4">
+                <img src="@Url.Content(db.Companies.Select(p => p.COMPANY_LOGO).FirstOrDefault())" class="img-fluid" alt=" ">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //about -->
+<!-- testimonials -->
+<div class="testimonials py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center text-white mb-lg-5 mb-sm-4 mb-3">
+            <span>O</span>ur
+            <span>C</span>ustomers
+            <span>S</span>ays
+        </h3>
+        <!-- tittle heading -->
+        <div class="row gallery-index">
+            @foreach (var f in db.Feedbacks)
+            {
+            <div class="col-sm-6 med-testi-grid">
+                <div class="med-testi test-tooltip rounded p-4">
+                    <p>
+                        "@f.FEEDBACK_DETAIL"
+                    </p>
+                </div>
+                <div class="row med-testi-left my-5">
+                    <div class="col-lg-10 col-9 med-testi-txt">
+                        <h4 class="font-weight-bold mb-lg-1 mb-2">@f.FEEDBACK_NAME</h4>
+                        <p>@f.FEEDBACK_EMAIL</p>
+                        <p>Ratting giving by customer: @f.FEEDBACK_RATE</p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- //testimonials -->

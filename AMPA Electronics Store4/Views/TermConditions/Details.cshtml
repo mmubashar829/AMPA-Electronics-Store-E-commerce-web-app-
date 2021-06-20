@@ -1,0 +1,35 @@
+﻿@model AMPA_Electronics_Store4.Models.TermCondition
+
+@{
+     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Terms & Conditions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TQ_TERM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TQ_TERM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TQ_CONDITION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TQ_CONDITION)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TQ_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

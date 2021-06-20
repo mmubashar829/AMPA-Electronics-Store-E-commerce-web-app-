@@ -1,0 +1,43 @@
+﻿@using AMPA_Electronics_Store4.Models;
+@{ 
+    Customer c = (Customer)Session["Customer"];
+    Model1 db = new Model1();
+    int no=0;
+}
+<center>
+    <h2>Order History</h2>
+</center>
+<center>
+    <table class="table table-bordered table-hover ">
+        <tr style="background-color:cornflowerblue; color:white">
+            <th>Sr #</th>
+            <th>Order Number</th>
+            <th>Ordre Date</th>
+            <th>Customer Name</th>
+            <th>Customer Email</th>
+            <th>Customer Contact</th>
+            <th>Customer Address</th>
+            <th>Order Status</th>
+            <th colspan="2">Action</th>
+        </tr>
+        @foreach (var O in db.Orders.Where(x => x.ORDER_TYPE == "Sale" & x.STATUS == "Active"))
+        {
+            if (O.CUSTOMER_FID == c.CUSTOMER_ID)
+            {
+                no++;
+                <tr>
+                <td align="center">@no</td>
+                <td align="center">Order-@O.ORDER_ID</td>
+                <td align="center">@DateTime.Parse(O.ORDER_DATE.ToString()).ToLongDateString() </td>
+                <td align="center">@O.ORDER_NAME</td>
+                <td align="center">@O.ORDER_EMAIL</td>
+                <td align="center">@O.ORDER_CONTACT</td>
+                <td align="center">@O.ORDER_ADDRESS</td>
+                <td align="center">@O.ORDER_STATUS</td>
+                <td align="center"><a class="btn btn-danger" href="@Url.Action("OrderCancellation", "Customers", new { id = O.ORDER_ID })">Cancel Order</a></td>
+                <td align="center"><a class="btn btn-primary" href="@Url.Action("SaleInvoice", "Customers", new { id = O.ORDER_ID })">View Invoice</a></td>
+            </tr>
+            }
+        }
+    </table>
+</center>

@@ -1,0 +1,90 @@
+﻿@using AMPA_Electronics_Store4.Models
+@{
+    Model1 db = new Model1();
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<section class="content-header">
+    <h1>
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Info boxes -->
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="glyphicon glyphicon-user"></i></span>
+                <div class="info-box-content ">
+                    <span class="info-box-text">@db.Admins.Count()</span>
+                    <span class="info-box-number ">Admin Accounts</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-export"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@db.Products.Count()</span>
+                    <span class="info-box-number">Products For Sale</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-export"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@db.Orders.Select(x=>x.ORDER_TYPE=="Sale").Count()</span>
+                    <span class="info-box-number">Total Sales</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="glyphicon glyphicon-import"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">@db.Orders.Select(x=>x.ORDER_TYPE=="Purchase").Count()</span>
+                    <span class="info-box-number">Total Purchases</span>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-green"><i class="fa fa-caret-up"></i></span>
+                                <h5 class="description-header"> Rs. @db.OrderDetails.Where(x=>x.Order.ORDER_TYPE == "Sale").Sum(x => x.SALE_PRICE * (x.QUANTITY * -1))</h5>
+                                <span class="description-text">TOTAL REVENUE</span>
+                            </div><!-- /.description-block -->
+                        </div><!-- /.col -->
+                        <div class="col-sm-4 col-xs-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i></span>
+                                <h5 class="description-header">Rs.@db.OrderDetails.Where(x=>x.Order.ORDER_TYPE == "Purchase").Sum(x => x.PURCHASE_PRICE * x.QUANTITY)</h5>
+                                <span class="description-text">TOTAL COST</span>
+                            </div><!-- /.description-block -->
+                        </div><!-- /.col -->
+                        <div class="col-sm-4 col-xs-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-green"><i class="fa fa-caret-up"></i></span>
+                                <h5 class="description-header">Rs.@((db.OrderDetails.Where(x=>x.Order.ORDER_TYPE == "Sale").Sum(x => x.SALE_PRICE * x.QUANTITY * -1)) - db.OrderDetails.Where(x=>x.Order.ORDER_TYPE == "Purchase").Sum(x => x.PURCHASE_PRICE * x.QUANTITY))</h5>
+                                <span class="description-text">TOTAL PROFIT</span>
+                            </div><!-- /.description-block -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.box-footer -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    <!-- Main row -->
+</section><!-- /.content -->

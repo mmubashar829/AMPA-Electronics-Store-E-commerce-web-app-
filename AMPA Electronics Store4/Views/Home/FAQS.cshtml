@@ -1,0 +1,33 @@
+﻿@using AMPA_Electronics_Store4.Models
+@{ 
+    Model1 db = new Model1();
+    int a = 1, total = 0 ;
+}
+<!-- Faqs -->
+<div class="faqs-w3l py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>F</span>aqs
+        </h3>
+        <!-- //tittle heading -->
+
+        <h3 class="w3-head mb-2">Top @db.FAQSs.Select(x =>x.FAQS_ID).Count() Frequently asked questions</h3>
+        @foreach (var fq in db.FAQSs)
+        {
+            <div class="faq-w3agile">
+                <ul class="pl-4">
+                    <li class="mt-3 pl-2" style="color:transparent">
+                        <h5 style="color:dodgerblue">@a) @fq.FAQS_QUESTION</h5>
+                                <p >
+                                   <h5 style="color:black; margin-top:10px"><b>Ans:</b> @fq.FAQS_ANSWER</h5>
+                                </p>
+                    </li>
+                </ul>
+            </div>
+            a++;
+            total += a;
+        }
+    </div>
+</div>
+<!-- //Faqs -->

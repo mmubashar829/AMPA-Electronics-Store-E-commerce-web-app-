@@ -1,0 +1,82 @@
+﻿@using AMPA_Electronics_Store4.Models;
+@{ 
+    Feedback f = (Feedback)Session["feedback"];
+}
+<div style="margin-top: 50px">
+    <center>
+        <div class="col-lg-9">
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                <span>T</span>hanks <span>F</span>or <span>Y</span>our <span>F</span>eed<span>b</span>ack
+            </h3>
+            @if (Session["feedback"] != null)
+            {
+                <table>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <h5>How do you rate your overall experience?</h5>
+                                    <p>
+                                        <label class="radio-inline">
+                                            @f.FEEDBACK_RATE
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <h5>
+                                        Comments:
+                                    </h5>
+                                    <p>
+                                        @f.FEEDBACK_DETAIL
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <h5>
+                                        Your Name:
+                                    </h5>
+                                    <label >
+                                        @f.FEEDBACK_NAME
+                                    </label>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <h5>
+                                        Email:
+                                    </h5>
+                                    <label>
+                                        @f.FEEDBACK_EMAIL
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <h5>
+                                        Contact:
+                                    </h5>
+                                    <label>
+                                        @f.FEEDBACK_CONTACT
+                                    </label>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <h5>
+                                        Address:
+                                    </h5>
+                                    <label>
+                                        @f.FEEDBACK_ADDRESS
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            }
+            <div style="width:100%; height:100%">
+                <h3>Posted your feedback successfully!</h3>
+            </div>
+        </div>
+    </center>
+</div>

@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model IEnumerable<AMPA_Electronics_Store4.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Create", "Products")">Add New Product</a>
+</p>
+<table class="table table-bordered table-hover table-responsive table-dark">
+    <tr>
+        <th>
+            PRODUCT PICTURE
+        </th>
+        <th>
+            PRODUCT NAME
+        </th>
+        <th>
+            PRODUCT DESCRIPTION
+        </th>
+        <th>
+            PURCHASEPRICE
+        </th>
+        <th>
+            SALEPRICE
+        </th>
+        <th>
+            DISCOUNT
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        <img height="100px" width="100px" src="@Url.Content(item.PRODUCT_PICTURE) " />
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCT_NAME)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCT_DESCRIPTION)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCT_PURCHASEPRICE)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCT_SALEPRICE)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCT_DISCOUNT)
+    </td>
+    <td>
+        <a class="btn btn-primary btn-lg glyphicon glyphicon-edit" href="@Url.Action("Edit", "Products",  new { id = item.PRODUCT_ID })"></a> |
+        <a class="btn btn-success btn-lg glyphicon glyphicon-book" href="@Url.Action("Details", "Products",  new { id = item.PRODUCT_ID })"></a> |
+        <a class="btn btn-danger btn-lg glyphicon glyphicon-trash" href="@Url.Action("Delete", "Products",  new { id = item.PRODUCT_ID })"></a> |
+    </td>
+</tr>
+    }
+
+</table>

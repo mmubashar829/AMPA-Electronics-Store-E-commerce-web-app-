@@ -1,0 +1,35 @@
+﻿@model AMPA_Electronics_Store4.Models.FAQS
+
+@{
+     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FAQS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FAQS_QUESTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FAQS_QUESTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FAQS_ANSWER)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FAQS_ANSWER)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FAQS_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

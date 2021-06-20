@@ -1,0 +1,84 @@
+﻿@model AMPA_Electronics_Store4.Models.ProductsModel
+@{ 
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<!-- top Products -->
+<div class="ads-grid py-sm-5 py-4"  style="background-color:white">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h2 class="col-lg-9 tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span style="color:dodgerblue">P</span>urchase
+            <span style="color:dodgerblue">P</span>roducts
+        </h2>
+        <!-- //tittle heading -->
+        <div class="row">
+            <!-- product left -->
+            <div class="agileinfo-ads-display col-lg-9">
+                <div class="wrapper" style="background-color:white">
+                    @{
+                        foreach (var c in Model.Cat)
+                        {
+                            <!-- first section -->
+                            <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
+                                <h3 class="heading-tittle text-center font-italic" style="margin-top:30px; margin-bottom:30px">@c.CATEGORY_NAME</h3>
+                                <div class="row" >
+                                    @foreach (var p in Model.Pro)
+                                    {
+                                        if (p.CATEGORY_FID == c.CATEGORY_ID)
+                                        {
+                                        <div class="col-md-6">
+                                            <div class="men-pro-item simpleCart_shelfItem">
+                                                <div class="men-thumb-item text-center">
+                                                    <img src="@Url.Content(p.PRODUCT_PICTURE)" style="height:270px; width:260px" alt="">
+
+                                                </div>
+                                                <div class="item-info-product text-center border-top mt-4">
+                                                    <h4>
+
+                                                        @p.PRODUCT_NAME
+                                                    </h4>
+
+                                                    <div class="info-product-price my-2">
+                                                        RS. @p.PRODUCT_PURCHASEPRICE
+                                                    </div>
+                                                    <div>
+                                                        @p.PRODUCT_DESCRIPTION
+                                                    </div>
+                                                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                        <a class="btn btn-block btn-primary" href="@Url.Action("AddToCart", "Purchase", new { id = p.PRODUCT_ID })">Add To Stock</a>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                     }
+                                </div>
+                            </div>
+                            <!-- //first section -->
+                            }
+                     }
+                </div>
+            </div>
+            <!-- //product left -->
+            <!-- product right -->
+            <div class="col-lg-3 mt-lg-0 mt-4 p-lg-0">
+                <h3 style="color:dodgerblue;text-align:center"> Categories </h3>
+                <div class="col-lg-3">
+                        <div >
+                            <ul>
+                                @foreach (var c in Model.Cat)
+                                {
+                                    <li >
+                                        <a class="btn" style="color:black" href="@Url.Action("PurchaseProducts", "Purchase", new { id =c.CATEGORY_ID})" ><h4>@c.CATEGORY_NAME</h4> (@c.Products.Count)</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                  </div>
+                <!-- //product right -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //top products -->

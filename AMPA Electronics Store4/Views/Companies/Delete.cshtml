@@ -1,0 +1,72 @@
+﻿@model AMPA_Electronics_Store4.Models.Company
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Company's Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY_MENIFESTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY_MENIFESTO)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY_EMAIL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY_EMAIL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY_CONTACT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY_CONTACT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY_ADDRESS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY_ADDRESS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY_LOGO)
+        </dt>
+
+        <dd>
+            <img height="100px" width="100px" src="@Url.Content(Model.COMPANY_LOGO)" />
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

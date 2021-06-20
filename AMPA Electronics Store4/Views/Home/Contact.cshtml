@@ -1,0 +1,78 @@
+﻿@using AMPA_Electronics_Store4.Models;
+@{
+    Model1 db = new Model1();
+}
+<!-- contact -->
+<div class="contact py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>C</span>ontact
+            <span>U</span>s
+        </h3>
+        <!-- //tittle heading -->
+        <div class="row contact-grids agile-1 mb-5">
+            <div class="col-sm-4 contact-grid agileinfo-6 mt-sm-0 mt-2">
+                <div class="contact-grid1 text-center">
+                    <div class="con-ic">
+                        <i class="fas fa-map-marker-alt rounded-circle"></i>
+                    </div>
+                    <h4 class="font-weight-bold mt-sm-4 mt-3 mb-3">Address</h4>
+                    <p>
+                        
+                        <label>@db.Companies.Select(p => p.COMPANY_ADDRESS).FirstOrDefault()</label>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 contact-grid agileinfo-6 my-sm-0 my-4">
+                <div class="contact-grid1 text-center">
+                    <div class="con-ic">
+                        <i class="fas fa-phone rounded-circle"></i>
+                    </div>
+                    <h4 class="font-weight-bold mt-sm-4 mt-3 mb-3">Call Us</h4>
+                    <p>
+                        
+                        <label>@db.Companies.Select(p => p.COMPANY_CONTACT).FirstOrDefault()</label>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 contact-grid agileinfo-6">
+                <div class="contact-grid1 text-center">
+                    <div class="con-ic">
+                        <i class="fas fa-envelope-open rounded-circle"></i>
+                    </div>
+                    <h4 class="font-weight-bold mt-sm-4 mt-3 mb-3">Email</h4>
+                    <p>
+                        
+                        <label>
+                            <a href="mailto:mmubashar829@gmail.com">@db.Companies.Select(p => p.COMPANY_EMAIL).FirstOrDefault()</a>
+                        </label>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-12 contact-grid agileinfo-6">
+                <center>
+                    <div class="contact-grid1 text-center" style="margin-top: 50px">
+                        <div class="con-ic">
+                            <i class="fas fa-comment rounded-circle"></i>
+                        </div>
+                        <h4 class="font-weight-bold mt-sm-4 mt-3 mb-3">Feedback</h4>
+                        
+                                <a href="@Url.Action("Feedback" , "Home")" class="btn btn-outline-primary">Click here to write feedback</a>
+                            
+                    </div>
+                </center>
+            </div>
+        </div>
+        <!-- form -->
+        
+        <!-- //form -->
+    </div>
+</div>
+<!-- //contact -->
+<!-- map -->
+<div class="map mt-sm-0 mt-4">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d805196.5077734194!2d144.49270863101745!3d-37.97015423820711!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad646b5d2ba4df7%3A0x4045675218ccd90!2sMelbourne+VIC%2C+Australia!5e0!3m2!1sen!2sin!4v1474020956974"
+            allowfullscreen></iframe>
+</div>
+<!-- //map -->

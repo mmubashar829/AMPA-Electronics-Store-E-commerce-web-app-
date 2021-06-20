@@ -1,0 +1,62 @@
+﻿@model IEnumerable<AMPA_Electronics_Store4.Models.Customer>
+@using AMPA_Electronics_Store4.Models;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Customer Account</h2>
+
+<table class="table table-responsive table-bordered table-primary">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CUSTOMER_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUSTOMER_EMAIL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUSTOMER_ADDRESS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUSTOMER_CONTACT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CUSTOMER_PASSWORD)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if(Session["Customer"] != null)
+        {
+            Customer c = (Customer)Session["Customer"];
+            if (c.CUSTOMER_ID == item.CUSTOMER_ID)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CUSTOMER_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CUSTOMER_EMAIL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CUSTOMER_ADDRESS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CUSTOMER_CONTACT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CUSTOMER_PASSWORD)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CUSTOMER_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CUSTOMER_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CUSTOMER_ID })
+                </td>
+            </tr>
+            }
+        }
+    }
+
+</table>

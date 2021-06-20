@@ -1,0 +1,12 @@
+﻿@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+<center>
+    <table class="table-bordered table-primary table-hover table-responsive-lg ">
+        <tr><td colspan="2" style="color:white; font-size:x-large; font-family:Arial; font-style:italic">Admin Login Page!</td></tr>
+        <tr><td style="color:white">E-Mail</td><td><input name="Admin_email" type="email" placeholder="enter email" /></td></tr>
+        <tr><td style="color:white">Password</td><td><input name="Admin_Password" type="password" placeholder="enter password" /></td></tr>
+        <tr><td colspan="2" style="color:red; font-style:italic">@ViewBag.Message</td></tr>
+        <tr><td colspan="2"><input type="submit" name="Submit" value="Login" class="btn btn-block btn-primary" /></td></tr>
+    </table>
+</center>
+}

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<AMPA_Electronics_Store4.Models.Company>
+
+@{
+    
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    
+    ViewBag.Title = "Company's Details";
+}
+
+<h2>Company's Details</h2>
+
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Create", "Companies")">Add New Company Details</a>
+</p>
+<table class="table table-bordered table-hover table-responsive table-dark">
+    <tr>
+        <th>
+            COMPANY LOGO
+        </th>
+        <th>
+            COMPANY NAME
+        </th>
+        <th>
+            COMPANY MENIFESTO
+        </th>
+        <th>
+            COMPANY EMAIL
+        </th>
+        <th>
+            COMPANY CONTACT
+        </th>
+        <th>
+            COMPANY ADDRESS
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        <img height="100px" width="100px" src="@Url.Content(item.COMPANY_LOGO) " />
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.COMPANY_NAME)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.COMPANY_MENIFESTO)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.COMPANY_EMAIL)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.COMPANY_CONTACT)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.COMPANY_ADDRESS)
+    </td>
+    <td>
+        <a class="btn btn-primary btn-lg glyphicon glyphicon-edit" href="@Url.Action("Edit", "Companies",  new { id = item.COMPANY_ID })"></a> |
+        <a class="btn btn-success btn-lg glyphicon glyphicon-book" href="@Url.Action("Details", "Companies",  new { id = item.COMPANY_ID })"></a> |
+        <a class="btn btn-danger btn-lg glyphicon glyphicon-trash" href="@Url.Action("Delete", "Companies",  new { id = item.COMPANY_ID })"></a> |
+    </td>
+</tr>
+    }
+
+</table>

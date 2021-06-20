@@ -1,0 +1,173 @@
+﻿@model AMPA_Electronics_Store4.Models.ProductsModel
+<!-- top Products -->
+<div class="ads-grid py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>O</span>ur
+            <span>P</span>roducts
+        </h3>
+        <!-- //tittle heading -->
+        <div class="row">
+            <!-- product left -->
+            <div class="agileinfo-ads-display col-lg-9">
+                <div class="wrapper">
+                   @{ 
+                       foreach (var c in Model.Cat)
+                       {
+                            <!-- fourth section -->
+                            <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mt-4">
+                                <h3 class="heading-tittle text-center font-italic">@c.CATEGORY_NAME</h3>
+                                <div class="row">
+                                    @foreach (var p in Model.Pro)
+                                    {
+                                        if (p.CATEGORY_FID == c.CATEGORY_ID)
+                                        {
+                                         <div class="col-md-4 product-men mt-5">
+                                               <div class="men-pro-item simpleCart_shelfItem">
+                                                   <div class="men-thumb-item text-center">
+                                                        <img src="@Url.Content(p.PRODUCT_PICTURE)" style="background-color:white" height="250px" width="200px" alt="">
+                                                        <div class="men-cart-pro">
+                                                             <div class="inner-men-cart-pro">
+                                                                  <a href="@Url.Action("QuickView", "Home", new { id1 = p.PRODUCT_ID })" class="link-product-add-cart">Quick View</a>
+                                                             </div>
+                                                        </div>
+                                                       @if (p.PRODUCT_DISCOUNT != null)
+                                                       {
+                                                            <span class="product-new-top">
+                                                                @p.PRODUCT_DISCOUNT% OFF SALE! 
+                                                            </span>
+                                                       }
+                                                   </div>
+                                                   <div class="item-info-product text-center border-top mt-4">
+                                                        <h4 class="pt-1">
+                                                            <a href="">@p.PRODUCT_NAME</a>
+                                                        </h4>
+                                                        <h6>Available Stock: @p.OrderDetails.Select(x => x.QUANTITY).Sum()</h6>
+                                                        <div class="info-product-price my-2">
+                                                            @if (p.PRODUCT_DISCOUNT != null)
+                                                            {
+                                                                <span class="item_price">Rs. @(p.PRODUCT_SALEPRICE - ((p.PRODUCT_SALEPRICE * decimal.Parse(p.PRODUCT_DISCOUNT.ToString()) / 100)))</span>
+                                                                <del>@p.PRODUCT_SALEPRICE</del>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="item_price">Rs. @p.PRODUCT_SALEPRICE</span>
+                                                            }
+                                                        </div>
+                                                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                              @if (p.OrderDetails.Select(x => x.QUANTITY).Sum() > 0)
+                                                              {
+                                                                    <a class="button btn btn-outline-primary" href="@Url.Action("AddToCart", "Home", new { id = p.PRODUCT_ID })">Add To Cart</a>
+                                                              }
+                                                        </div>
+                                                   </div>
+                                              </div>
+                                         </div>
+                                        
+                                        }
+                                     }
+                                </div>
+                            </div>
+                            <!-- //fourth section -->
+                       }
+                    }
+                </div>
+            </div>
+            <!-- //product left -->
+            <!-- product right -->
+                <div class="col-lg-3 mt-lg-0 mt-4 p-lg-0">
+                    <hr />
+                    <div class="side-bar p-sm-4 p-3">
+                        <div class="search-hotel border-bottom py-2">
+                            <h3 class="agileits-sear-head mb-3">Search Here..</h3>
+                            @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+                            {
+                                <table class=" search-hotel">
+                                    <tr>
+                                        <td>
+                                            <input type="search" placeholder="Search" aria-label="Search" name="name" required>
+                                        </td>
+                                        <td>
+                                            <input style="color:transparent" type="submit" name="Search" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            }
+                        </div>
+                        <div class="search-hotel border-bottom py-2">
+                            <h3 class="agileits-sear-head mb-3"> Categories </h3>
+                            <div class="left-side py-2">
+                                <ul>
+                                    <li>
+                                        <a href="@Url.Action("Products", "Home", new { id=0})" class="btn btn-light">All Product</a>
+                                    </li>
+                                    @foreach (var cat in Model.Cat)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Products", "Home", new { id = cat.CATEGORY_ID})" class="btn btn-light">@cat.CATEGORY_NAME (@cat.Products.Count)</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- price -->
+                        <div class="range border-bottom py-2">
+                            <h3 class="agileits-sear-head mb-3">Price</h3>
+                            <div class="w3l-range">
+                                <ul>
+                                    <li class="my-1">
+                                        <a href="@Url.Action("Products", "Home", new { id1 = 'a'})">Less than Rs. 10,000</a>
+                                    </li>
+                                    <li class="my-1">
+                                        <a href="@Url.Action("Products", "Home", new { id1 = 'b'})">Rs. 10,000-20,000</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Products", "Home", new { id1 = 'c'})">Rs. 20,000-30,000</a>
+                                    </li>
+                                    <li class="my-1">
+                                        <a href="@Url.Action("Products", "Home", new { id1 = 'd'})">Rs. 30,000-40,000</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Products", "Home", new { id1 = 'e'})">Rs. 40,000-50,000</a>
+                                    </li>
+                                    <li class="mt-1">
+                                        <a href="@Url.Action("Products", "Home", new { id1 = 'f'})">More than Rs. 50,000</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //price -->
+                        <!-- discounts -->
+                        <div class="left-side border-bottom py-2">
+                            <h3 class="agileits-sear-head mb-3">Discount</h3>
+                            <ul>
+                                <li>
+                                    <span class="span"><a href="@Url.Action("Products", "Home", new { id1 = 'g'})">5% or More</a></span>
+                                </li>
+                                <li>
+                                    <span class="span"><a href="@Url.Action("Products", "Home", new { id1 = 'h'})">10% or More</a></span>
+                                </li>
+                                <li>
+                                    <span class="span"><a href="@Url.Action("Products", "Home", new { id1 = 'i'})">20% or More</a></span>
+                                </li>
+                                <li>
+                                    <span class="span"><a href="@Url.Action("Products", "Home", new { id1 = 'j'})">30% or More</a></span>
+                                </li>
+                                <li>
+                                    <span class="span"><a href="@Url.Action("Products", "Home", new { id1 = 'k'})">40% or More</a></span>
+                                </li>
+                                <li>
+                                    <span class="span"><a href="@Url.Action("Products", "Home", new { id1 = 'l'})">50% or More</a></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- //discounts -->
+                    </div>
+                    <!-- //product right -->
+                </div>
+                <!-- //product right -->
+        </div>
+    </div>
+</div>
+<!-- //top products -->

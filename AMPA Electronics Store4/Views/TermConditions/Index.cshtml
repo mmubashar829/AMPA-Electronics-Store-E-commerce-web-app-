@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AMPA_Electronics_Store4.Models.TermCondition>
+
+@{
+    
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    
+    ViewBag.Title = "Terms & Conditions";
+}
+
+<h2>Terms & Conditions</h2>
+
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Create", "TermConditions")">Add New Terms & Conditions</a>
+</p>
+<table class="table table-bordered table-hover table-responsive table-dark">
+    <tr>
+        <th>
+             Terms
+        </th>
+        <th>
+            Conditions
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.TQ_TERM)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TQ_CONDITION)
+    </td>
+    <td>
+        <a class="btn btn-primary btn-lg glyphicon glyphicon-edit" href="@Url.Action("Edit", "TermConditions",  new { id = item.TQ_ID })"></a> |
+        <a class="btn btn-success btn-lg glyphicon glyphicon-book" href="@Url.Action("Details", "TermConditions",  new { id = item.TQ_ID })"></a> |
+        <a class="btn btn-danger btn-lg glyphicon glyphicon-trash" href="@Url.Action("Delete", "TermConditions",  new { id = item.TQ_ID })"></a> |
+    </td>
+</tr>
+    }
+
+</table>

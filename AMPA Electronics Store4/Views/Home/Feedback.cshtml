@@ -1,0 +1,128 @@
+﻿@using AMPA_Electronics_Store4.Models;
+@{ 
+    Model1 db = new Model1();
+}
+<div  style="margin-top: 50px">
+    <center>
+        <div class="col-lg-9">
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                <span>F</span>eed<span>b</span>ack
+            </h3>
+            <p>
+                Please provide your feedback below:
+            </p>
+            @if (Session["Customer"] == null)
+            {
+            <a href="@Url.Action("Login","Customers")"><h4 style="margin-top: 50px" class="mb-sm-4 mb-3 fa fa-user" style="text-align:right">Customer Login</h4></a>
+            }
+            @using (Html.BeginForm("Post", "Home", FormMethod.Post))
+            {
+                <table class="col-lg-12 table ">
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-lg-12 form-group">
+                                    <label>How do you rate your overall experience?</label>
+                                    <p>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="FEEDBACK_RATE" value="bad">
+                                            Bad
+                                        </label>
+
+                                        <label class="radio-inline">
+                                            <input type="radio" name="FEEDBACK_RATE" value="average">
+                                            Average
+                                        </label>
+
+                                        <label class="radio-inline">
+                                            <input type="radio" name="FEEDBACK_RATE" value="good">
+                                            Good
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <label for="comments">
+                                        Comments:
+                                    </label>
+                                    <textarea class="form-control" type="textarea" name="FEEDBACK_DETAIL" placeholder="Your Comments" maxlength="6000" rows="7"></textarea>
+                                </div>
+                            </div>
+                            @if (Session["Customer"] != null)
+                            {
+                                Customer c = (Customer)Session["Customer"];
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="name">
+                                            Your Name:
+                                        </label>
+                                        <input type="text" class="form-control" name="FEEDBACK_NAME" value="@c.CUSTOMER_NAME" required>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="email">
+                                            Email:
+                                        </label>
+                                        <input type="email" class="form-control" name="FEEDBACK_EMAIL" value="@c.CUSTOMER_EMAIL" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="name">
+                                            Contact:
+                                        </label>
+                                        <input type="text" class="form-control" name="FEEDBACK_CONTACT" value="@c.CUSTOMER_CONTACT" required>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label>
+                                            Address:
+                                        </label>
+                                        <input type="text" class="form-control" name="FEEDBACK_ADDRESS" value="@c.CUSTOMER_ADDRESS" required>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="name">
+                                            Your Name:
+                                        </label>
+                                        <input type="text" class="form-control" name="FEEDBACK_NAME" required>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="email">
+                                            Email:
+                                        </label>
+                                        <input type="email" class="form-control" name="FEEDBACK_EMAIL" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="name">
+                                            Contact:
+                                        </label>
+                                        <input type="text" class="form-control" name="FEEDBACK_CONTACT" required>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="email">
+                                            Address:
+                                        </label>
+                                        <input type="text" class="form-control" name="FEEDBACK_ADDRESS" required>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" value="Post" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    </center>
+</div>

@@ -1,0 +1,25 @@
+﻿@using AMPA_Electronics_Store4.Models
+@{ 
+    Model1 db = new Model1();
+}
+<!-- terms -->
+<div class="terms py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>T</span>erms
+            <span>O</span>f
+            <span>U</span>se
+        </h3>
+        <!-- //tittle heading -->
+        <h3 class="w3-head w3-secong-head text-capitalize">please read these terms and conditions carefully.</h3>
+        @foreach (var tc in db.TermConditions)
+        {
+        <h6 class="my-md-4 my-3">@tc.TQ_TERM</h6>
+        <p class="font-weight-light pl-sm-4 mb-2">
+            @tc.TQ_CONDITION
+        </p>
+        }
+    </div>
+</div>
+<!-- //terms -->

@@ -1,0 +1,216 @@
+﻿@using AMPA_Electronics_Store4.Models
+@{
+    int row = 0, totalqty = 0;
+    decimal totalbill = 0;
+}
+<!-- checkout page -->
+<div id="printArea" class="privacy py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>Y</span>our <span>O</span>rder <span>H</span>as <span>B</span>ooked
+        </h3>
+        <br />
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>T</span>hanks <span>F</span>or <span>Y</span>our <span>T</span>rust
+        </h3>
+        <!-- //tittle heading -->
+        <div class="checkout-right">
+            <div class="table-responsive table-bordered table-primary table-hover">
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Session["mycart"] == null)
+                        {
+                            <tr>
+                                <td class="invert" colspan="6">
+                                    <b style="align-content:center ; color:red; font-size:medium">Your shopping Cart Is Empty!....<a href="@Url.Action("Products", "Home")">Click Here</a>....To Shop!</b>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in (List<Product>)Session["mycart"])
+                            {
+                                <tr class="rem1">
+                                    <td class="image">
+                                        <a href="single.html">
+                                            <img height="190px" width="210px" src="@Url.Content(item.PRODUCT_PICTURE)" alt=" " class="img-responsive">
+                                        </a>
+                                    </td>
+                                    <td class="invert">
+                                        <b>@item.PRODUCT_NAME</b>
+                                        <br />
+                                        <h6 style="color:black"> @item.PRODUCT_DESCRIPTION</h6>
+                                    </td>
+                                    <td class="invert"><b>RS. @item.PRODUCT_SALEPRICE</b></td>
+                                    <td class="invert">
+                                        <div class="quantity">
+
+
+                                            <span><b>@item.PRO_QUANTITY</b></span>
+
+
+                                        </div>
+                                    </td>
+                                    <td class="invert"><b>RS. @(decimal.Parse(item.PRODUCT_SALEPRICE.ToString()) * (int.Parse(item.PRO_QUANTITY.ToString())))</b></td>
+                                </tr>
+                                row++;
+                                totalqty += (int.Parse(item.PRO_QUANTITY.ToString()));
+                                totalbill += decimal.Parse(item.PRODUCT_SALEPRICE.ToString()) * (int.Parse(item.PRO_QUANTITY.ToString()));
+                            }
+                        }
+
+                    </tbody>
+                    <tfoot class="invert">
+                        @if (totalqty >= 1)
+                        {
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><b>@totalqty</b></td>
+                                <td><b>@totalbill</b></td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        @if(Session["Order"] != null)
+        {
+            Order o = (Order)Session["Order"];
+            <div class="col-lg-12">
+                <table class="table table-responsive">
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="color:blue; font-size:large; font-style:italic; align-content:center"><h4>Customer Details</h4></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="color:grey">Customer Name</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">@o.ORDER_NAME</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="color:grey">Customer E-mail</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">@o.ORDER_EMAIL</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" style="color:grey">Customer Contact</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">@o.ORDER_CONTACT</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="color:grey">Customer Delivery Address</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">@o.ORDER_ADDRESS</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="color:grey">Order Status</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">@o.ORDER_STATUS</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="color:blue; font-size:large; font-style:italic">
+                            <h5>Thanks For Shopping Here</h5>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">Your Order will be deliver as per our terms & conditions</td>
+                    </tr>
+
+                </table>
+            </div>
+        }
+        <div class="col-lg-12">
+            <table class="table table-responsive">
+                @if (totalqty >= 1)
+                {
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="color:blue; font-size:large; font-style:italic; align-content:center"><h4>Order Summary</h4></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="color:grey">Sub Total:</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">RS. @totalbill</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="color:grey">Delivery Charges:</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">Free</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" style="color:blue; font-size:large">
+                            <h5>Grand Total:</h5>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3" style="color:grey; align-content:center">@totalbill</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<center>
+    <input id="btn1" type="submit" class="btn btn-primary" value="Print Now" onclick="return PrintFunction();" />
+    <br />
+    <br />
+    <br />
+    <a id="btn2" class="btn btn-primary" href="@Url.Action("CloseOrder", "Home")">Close Order</a>
+</center>
+<!-- //checkout page -->
+<script type="text/javascript">
+    function PrintFunction() {
+        var print = document.getElementById('printArea');
+        var b1 = document.getElementById('btn1');
+        var b2 = document.getElementById('btn2');
+        b1.style.display = 'none';
+        var printWindow = window.open('', '', 'height=400, width=800');
+        printWindow.document.write('<html><head><title>DIV Contents</title>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(print.innerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        setTimeout(function () {
+            printWindow.print();
+        }, 500);
+        b1.style.display = 'block';
+        return false;
+    }
+</script>
